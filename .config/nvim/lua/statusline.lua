@@ -1,5 +1,6 @@
 local gl = require("galaxyline")
 local gls = gl.section
+local cnd = require("galaxyline.condition")
 
 gl.short_line_list = {" "} -- keeping this table { } as empty will show inactive statuslines
 
@@ -17,7 +18,7 @@ local colors = {
 gls.left[1] = {
     main = {
         provider = function()
-            return "   "
+            return "   "
         end,
         highlight = {colors.bg, colors.yellow},
         separator_highlight = {colors.yellow, colors.red},
@@ -46,9 +47,15 @@ gls.left[3] = {
 
 gls.left[4] = {
     GitBranch = {
-        provider = "GitBranch",
+        provider = function()
+	    if(cnd.check_git_workspace())
+	    then
+            	return require('galaxyline.provider_vcs').get_git_branch() .. " "
+	    else
+		return "none "
+            end
+        end,
         icon = "  ",
-        condition = require("galaxyline.provider_vcs").check_git_workspace,
         highlight = {colors.gray_fg, colors.gray},
         separator = "",
         separator_highlight = { colors.gray, colors.bg },
