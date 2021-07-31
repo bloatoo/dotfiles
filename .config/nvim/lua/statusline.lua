@@ -2,8 +2,19 @@ local gl = require("galaxyline")
 local gls = gl.section
 local cnd = require("galaxyline.condition")
 local vcs = require("galaxyline.provider_vcs")
+local fileinfo = require("galaxyline.provider_fileinfo")
 
 gl.short_line_list = {" "} -- keeping this table { } as empty will show inactive statuslines
+
+local function check_empty_string(s, o)
+    if s == nil or s == ''
+    then
+        return o
+    else
+        return s
+    end
+end
+
 
 local colors = {
     bg = "#22262e",
@@ -11,6 +22,9 @@ local colors = {
     secondary = "#353b45",
     green = "#a3be8c",
     lightfg = "#2e3340",
+    red = "#bf616a",
+    green = "#a3be8c",
+    yellow = "#ebcb8b",
     fg = "#d8dee9",
     gray_fg = "#6f737b",
     gray = "#30343c"
@@ -19,7 +33,7 @@ local colors = {
 gls.left[1] = {
     primary = {
         provider = function()
-            return "  " .. vim.bo.filetype .. " "
+            return "  " .. check_empty_string(vim.bo.filetype, "no ft") .. " "
         end,
         highlight = {colors.bg, colors.primary},
         separator_highlight = {colors.primary, colors.secondary},
@@ -38,7 +52,9 @@ gls.left[2] = {
 
 gls.left[3] = {
     FileName = {
-        provider = {"FileName"},
+        provider = function()
+            return check_empty_string(fileinfo.get_current_file_name(), "none ")
+        end,
         condition = buffer_not_empty,
         separator = "",
         separator_highlight = { colors.secondary, colors.gray },
@@ -63,22 +79,13 @@ gls.left[4] = {
     }
 }
 
-local function check_diff(s)
-    if s == nil or s == ''
-    then
-        return '0'
-    else
-        return s
-    end
-end
-
 gls.right[1] = {
     DiffAdd = {
         provider = function()
-            return check_diff(vcs.diff_add()) .. " "
+            return check_empty_string(vcs.diff_add(), "0") .. " "
         end,
         icon = " [+]",
-        highlight = {colors.gray_fg, colors.gray},
+        highlight = {colors.gray_fg, colors.gray}, -- green
         separator = "",
         separator_highlight = { colors.gray, colors.bg },
     },
@@ -87,20 +94,20 @@ gls.right[1] = {
 gls.right[2] = {
     DiffModified = {
         provider = function()
-            return check_diff(vcs.diff_modified()) .. " "
+            return check_empty_string(vcs.diff_modified(), "0") .. " "
         end,
         icon = "[*]",
-        highlight = {colors.gray_fg, colors.gray}
+        highlight = {colors.gray_fg, colors.gray} -- yellow
     }
 }
 
 gls.right[3] = {
     DiffRemove = {
         provider = function()
-            return check_diff(vcs.diff_remove()) .. " "
+            return check_empty_string(vcs.diff_remove(), "0") .. " "
         end,
         icon = "[-]",
-        highlight = { colors.gray_fg, colors.gray}
+        highlight = { colors.gray_fg, colors.gray} -- red
     }
 }
 

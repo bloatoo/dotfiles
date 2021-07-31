@@ -89,7 +89,7 @@ vim.g.indent_blankline_show_first_indent_level = false
 
 cmd('hi LineNr guifg=#2e3440')
 cmd('highlight StatusLine guifg=#2e3440 guibg=#22262e')
-cmd('highlight StatusLineNC guifg=#2e3440 guibg=#22262e')
+cmd('highlight StatusLineNC gui=underline guifg=#2e3440 guibg=#1e222a')
 cmd('highlight VertSplit guifg=#2e3440')
 
 cmd('hi clear CursorLine')
