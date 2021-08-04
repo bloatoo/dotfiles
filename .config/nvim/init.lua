@@ -11,61 +11,69 @@ opt.number = true
 opt.termguicolors = true
 
 require('packer').startup(function()
-    use 'wbthomason/packer.nvim'
+    use {
+        'wbthomason/packer.nvim',
+        event = "VimEnter"
+    }
+
     use 'neovim/nvim-lspconfig'
     use 'glepnir/galaxyline.nvim'
     use 'shaunsingh/nord.nvim'
-    use 'norcalli/nvim-base16.lua'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'hrsh7th/nvim-compe'
-    use "lukas-reineke/indent-blankline.nvim"
+
+    use {
+        'hrsh7th/nvim-compe',
+        event = "InsertEnter",
+    }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        event = "BufRead"
+    }
+
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        event = "BufRead",
+    }
+
+    use {
+        'lewis6991/gitsigns.nvim',
+        after = "plenary.nvim",
+    }
+
+    use {
+        'nvim-lua/plenary.nvim',
+        event = "BufRead"
+    }
+
+    use 'simrat39/rust-tools.nvim'
+    use 'mfussenegger/nvim-dap'
 end
 )
 
 local lsp = require('lspconfig')
-lsp.rust_analyzer.setup{}
 lsp.clangd.setup{}
+lsp.rust_analyzer.setup{}
 
--- require('nord').set()
 require ('statusline')
 require('nord').set()
+require("gitsigns").setup({
+    signcolumn = false,
+})
+
+require('rust-tools').setup({})
+
 
 vim.g.nord_disable_background = true
 vim.g.nord_borders = true
 
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-    ultisnips = true;
-    luasnip = true;
-  };
-}
+require'compe'.setup({
+    enabled = true,
+    source = {
+        path = true,
+        buffer = true,
+        nvim_lsp = true,
+    },
+})
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -94,6 +102,10 @@ cmd('highlight VertSplit guifg=#2e3440')
 
 cmd('hi clear CursorLine')
 cmd('highlight cursorlinenr guifg=#22262e')
+cmd('highlight Pmenu guibg=#2e3440')
+cmd('highlight PmenuSel guibg=#4c566a')
+cmd('highlight PmenuThumb guibg=#d8dee9')
+cmd('highlight SignColumn guibg=none guifg=#22262e')
+--cmd('autocmd ColorScheme hi LineNr guifg=#ffffff')
 
 cmd('highlight Normal guibg=none ctermbg=NONE')
---cmd('autocmd ColorScheme hi LineNr guifg=#ffffff')

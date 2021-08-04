@@ -82,7 +82,7 @@ gls.left[4] = {
 gls.right[1] = {
     DiffAdd = {
         provider = function()
-            return check_empty_string(vcs.diff_add(), "0") .. " "
+            return check_empty_string(vcs.diff_add(), "0 ")
         end,
         icon = " [+]",
         highlight = {colors.gray_fg, colors.gray}, -- green
@@ -94,7 +94,7 @@ gls.right[1] = {
 gls.right[2] = {
     DiffModified = {
         provider = function()
-            return check_empty_string(vcs.diff_modified(), "0") .. " "
+            return check_empty_string(vcs.diff_modified(), "0 ")
         end,
         icon = "[*]",
         highlight = {colors.gray_fg, colors.gray} -- yellow
@@ -104,7 +104,7 @@ gls.right[2] = {
 gls.right[3] = {
     DiffRemove = {
         provider = function()
-            return check_empty_string(vcs.diff_remove(), "0") .. " "
+            return check_empty_string(vcs.diff_remove(), "0 ")
         end,
         icon = "[-]",
         highlight = { colors.gray_fg, colors.gray} -- red
