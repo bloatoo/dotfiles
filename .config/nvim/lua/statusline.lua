@@ -18,16 +18,17 @@ end
 
 local colors = {
     bg = "#22262e",
-    primary = "#ebcb8b",
+    --primary = "#ebcb8b",
+    primary = "#88c0d0",
     secondary = "#353b45",
-    green = "#a3be8c",
+    fg = "#d8dee9",
+    gray_fg = "#6f737b",
+    gray = "#30343c",
     lightfg = "#2e3340",
     red = "#bf616a",
     green = "#a3be8c",
     yellow = "#ebcb8b",
-    fg = "#d8dee9",
-    gray_fg = "#6f737b",
-    gray = "#30343c"
+    blue = "#81a1c1"
 }
 
 gls.left[1] = {

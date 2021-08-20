@@ -4,6 +4,7 @@ local cmd = vim.cmd
 cmd("filetype plugin indent on")
 cmd("syntax on")
 cmd("set noshowmode")
+cmd("let g:gruvbox_material_background = 'hard'")
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.smartindent = true
@@ -11,29 +12,21 @@ opt.number = true
 opt.termguicolors = true
 
 require('packer').startup(function()
-    use {
-        'wbthomason/packer.nvim',
-        event = "VimEnter"
-    }
-
+    use 'wbthomason/packer.nvim'
+    use 'mxw/vim-jsx'
     use 'neovim/nvim-lspconfig'
+    use 'sainnhe/gruvbox-material'
+    use {
+        'ms-jpq/coq_nvim', 
+        branch='coq'
+    }
     use 'glepnir/galaxyline.nvim'
     use 'shaunsingh/nord.nvim'
+    use 'hrsh7th/nvim-compe'
+    use 'nvim-treesitter/nvim-treesitter'
+    use 'peitalin/vim-jsx-typescript'
 
-    use {
-        'hrsh7th/nvim-compe',
-        event = "InsertEnter",
-    }
-
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        event = "BufRead"
-    }
-
-    use {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "BufRead",
-    }
+    use "lukas-reineke/indent-blankline.nvim"
 
     use {
         'lewis6991/gitsigns.nvim',
@@ -51,14 +44,19 @@ end
 )
 
 local lsp = require('lspconfig')
+local coq = require('coq')
+
 lsp.clangd.setup{}
 lsp.rust_analyzer.setup{}
+-- lsp.denols.setup{}
+lsp.tsserver.setup{}
+lsp.hls.setup{}
 
 require ('statusline')
 require('nord').set()
-require("gitsigns").setup({
-    signcolumn = false,
-})
+--require("gitsigns").setup({
+--    signcolumn = false,
+--})
 
 require('rust-tools').setup({})
 
