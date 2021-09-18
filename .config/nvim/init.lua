@@ -30,8 +30,6 @@ cmd("let g:nvim_tree_width = 35")
 
 cmd('nnoremap <C-n> <cmd>NvimTreeToggle<cr>')
 
-require('lsp')
-
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     use 'mxw/vim-jsx'
