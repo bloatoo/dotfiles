@@ -11,7 +11,7 @@ local function check_empty_string(s, o)
     then
         return o
     else
-        return ' ' .. s
+        return s
     end
 end
 
@@ -28,7 +28,7 @@ local colors = {
     red = "#ab4642",
     green = "#a3be8c",
     yellow = "#ebcb8b",
-    blue = "#ab4642"
+    blue = "#7cafc2"
 }
 
 gls.left[1] = {
