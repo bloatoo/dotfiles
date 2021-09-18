@@ -11,24 +11,24 @@ local function check_empty_string(s, o)
     then
         return o
     else
-        return s
+        return ' ' .. s
     end
 end
 
 
 local colors = {
-    bg = "#22262e",
+    bg = "#282828",
     --primary = "#ebcb8b",
-    primary = "#88c0d0",
-    secondary = "#353b45",
-    fg = "#d8dee9",
-    gray_fg = "#6f737b",
-    gray = "#30343c",
+    primary = "#a1b56c",
+    secondary = "#f7ca88",
+    fg = "#282828",
+    gray_fg = "#282828",
+    gray = "#ab4642",
     lightfg = "#2e3340",
-    red = "#bf616a",
+    red = "#ab4642",
     green = "#a3be8c",
     yellow = "#ebcb8b",
-    blue = "#81a1c1"
+    blue = "#ab4642"
 }
 
 gls.left[1] = {
@@ -42,15 +42,6 @@ gls.left[1] = {
     }
 }
 
-gls.left[2] = {
-    sep = {
-        provider = function()
-            return " "
-        end,
-        highlight = {colors.fg, colors.secondary}
-    }
-}
-
 gls.left[3] = {
     FileName = {
         provider = function()
@@ -58,6 +49,7 @@ gls.left[3] = {
         end,
         condition = buffer_not_empty,
         separator = "",
+        icon = " ",
         separator_highlight = { colors.secondary, colors.gray },
         highlight = {colors.fg, colors.secondary }
     }
@@ -73,7 +65,7 @@ gls.left[4] = {
                 return "none "
             end
         end,
-        icon = "  ",
+        icon = "   ",
         highlight = {colors.gray_fg, colors.gray},
         separator = "",
         separator_highlight = { colors.gray, colors.bg },
@@ -126,8 +118,8 @@ gls.right[4] = {
             }
             return alias[vim.fn.mode()]
         end,
-        highlight = {colors.fg, colors.secondary},
         separator = "",
+        highlight = {colors.fg, colors.secondary},
         separator_highlight = { colors.secondary, colors.gray},
     }
 }
