@@ -13,7 +13,6 @@ modules-center =
 modules-right = powermenu updown pulseaudio battery wifi time
 line-size = 3
 line-color = #81a1c1
-bottom = true
 tray-position = left
 tray-padding = 2
 tray-background = #282828
