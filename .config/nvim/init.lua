@@ -27,6 +27,7 @@ cmd("autocmd FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expand
 cmd("autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab")
 
 cmd("let g:nvim_tree_width = 35")
+cmd("set mouse=a")
 
 cmd('nnoremap <C-n> <cmd>NvimTreeToggle<cr>')
 
@@ -74,8 +75,8 @@ base16(base16.themes["default-dark"])
 
 lsp.clangd.setup{}
 lsp.rust_analyzer.setup{}
--- lsp.denols.setup{}
-lsp.tsserver.setup{}
+lsp.denols.setup{}
+-- lsp.tsserver.setup{}
 lsp.hls.setup{}
 
 require ('statusline')
@@ -116,6 +117,7 @@ cmd('highlight PmenuSel guibg=#383838 guifg=#d8d8d8')
 cmd('highlight PmenuThumb guibg=#d8dee9')
 cmd('highlight SignColumn guibg=none guifg=#181818')
 cmd('highlight LspDiagnosticsDefaultError guifg=#ab4642')
+cmd('highlight LspDiagnosticsDefaultWarning guifg=#f7ca88')
 --cmd('autocmd ColorScheme hi LineNr guifg=#ffffff')
 
 cmd('highlight Normal guibg=none ctermbg=NONE')
