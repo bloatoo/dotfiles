@@ -17,18 +17,14 @@ end
 
 
 local colors = {
-    bg = "#282828",
+    bg = "#212326",
     --primary = "#ebcb8b",
-    primary = "#a1b56c",
-    secondary = "#f7ca88",
-    fg = "#282828",
-    gray_fg = "#282828",
-    gray = "#ab4642",
+    primary = "#f0c674",
+    secondary = "#383c40",
+    fg = "#c5c8c6",
+    gray_fg = "#666d74",
+    gray = "#2c2f32",
     lightfg = "#2e3340",
-    red = "#ab4642",
-    green = "#a3be8c",
-    yellow = "#ebcb8b",
-    blue = "#7cafc2"
 }
 
 gls.left[1] = {
@@ -42,6 +38,15 @@ gls.left[1] = {
     }
 }
 
+gls.left[2] = {
+    sep = {
+        provider = function()
+            return " "
+        end,
+        highlight = {colors.fg, colors.secondary}
+    }
+}
+
 gls.left[3] = {
     FileName = {
         provider = function()
@@ -49,7 +54,6 @@ gls.left[3] = {
         end,
         condition = buffer_not_empty,
         separator = "",
-        icon = " ",
         separator_highlight = { colors.secondary, colors.gray },
         highlight = {colors.fg, colors.secondary }
     }
@@ -65,7 +69,7 @@ gls.left[4] = {
                 return "none "
             end
         end,
-        icon = "   ",
+        icon = "  ",
         highlight = {colors.gray_fg, colors.gray},
         separator = "",
         separator_highlight = { colors.gray, colors.bg },
@@ -118,8 +122,8 @@ gls.right[4] = {
             }
             return alias[vim.fn.mode()]
         end,
-        separator = "",
         highlight = {colors.fg, colors.secondary},
+        separator = "",
         separator_highlight = { colors.secondary, colors.gray},
     }
 }

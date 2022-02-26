@@ -1,31 +1,30 @@
 [bar/bar]
-background = #181818
+background = #1d1f21
 foreground = #d8d8d8
-font-0 = source code pro:size=10;3
+font-0 = source code pro:size=8;3
 font-1 = Font Awesome 5 Free Solid:size=10;3
 font-2 = Font Awesome 5 Brands:size=10;3
-font-3 = droid sans mono for powerline:size=16;3
 width = 100%
 height = 35
 wm-restack = bspwm
 modules-left = bspwm
 modules-center =
-modules-right = updown pulseaudio time
+modules-right = music updown pulseaudio time
 line-size = 3
 line-color = #81a1c1
 tray-position = left
 tray-padding = 2
-tray-background = #282828
+tray-background = #383838
 
 [module/bspwm]
 type = internal/bspwm
 format = <label-state>
 label-occupied-foreground = #d8d8d8
-label-occupied-background = #181818
+label-occupied-background = #1d1f21
 label-focused-foreground = #d8d8d8
-label-focused-background = #282828
+label-focused-background = #383838
 label-empty-foreground = #d8d8d8
-label-empty-background = #181817
+label-empty-background = #1d1f21
 label-focused = %name%
 label-occupied = %name%
 label-empty = %name%
@@ -39,19 +38,19 @@ format-volume = <label-volume>
 format-muted = <label-muted>
 label-muted = "    Muted  "
 label-volume = "    %percentage%%  "
-format-volume-background = #f7ca88
-format-volume-foreground = #181818
-format-muted-background = #f7ca88
-format-muted-foreground = #181818
+format-volume-background = #81a1c1
+format-volume-foreground = #1d1f21
+format-muted-background = #81a1c1
+format-muted-foreground = #1d1f21
 
 [module/wifi]
 type = internal/network
 interface = wlp1s0
 label-connected = "    %essid%  "
 label-disconnected = "    N/A  "
-label-connected-foreground = #22262e
+label-connected-foreground = #282828
 label-connected-background = #81a1c1
-label-disconnected-foreground = #22262e
+label-disconnected-foreground = #282828
 label-disconnected-background = #81a1c1
 
 [module/battery]
@@ -67,15 +66,15 @@ label-charging-background = #89beba
 type = internal/date
 date = %A, %d %B
 label = "    %date%  "
-label-foreground = #22262e
+label-foreground = #282828
 label-background = #81a1c1
 
 [module/time]
 type = internal/date
 date = %I:%M %p
 label = "   %date%  "
-label-foreground = #181818
-label-background = #a1b56c
+label-foreground = #1d1f21
+label-background = #b48ead
 
 [module/music]
 type = internal/mpd
@@ -85,19 +84,19 @@ format-online = <label-song>
 format-playing = ${self.format-online}
 format-paused = ${self.format-online}
 format-offline = ${self.label-offline}
-label-song = "   %artist% - %title%  "
-label-offline = "  MPD not running  "
-label-song-foreground = #323d43
-label-song-background = #a7c080
-format-offline-foreground = #323d43
-format-offline-background = #a7c080
+label-song = "   %title%  "
+label-offline = "  No music  "
+label-song-foreground = #1d1f21
+label-song-background = #ebcb8b
+format-offline-foreground = #1d1f21
+format-offline-background = #ebcb8b
 
 [module/updown]
 type = internal/network
-interface = wlo1
+interface = enp4s0
 label-disconnected = "   N/A   N/A  "
 label-connected = "   %downspeed%   %upspeed%  "
-label-connected-foreground = #181818
-label-connected-background = #ab4642
-label-disconnected-foreground = #181818
-label-disconnected-background = #ab4642
+label-connected-foreground = #1d1f21
+label-connected-background = #a3be8c
+label-disconnected-foreground = #1d1f21
+l1d1f21abel-disconnected-background = #a3be8c
