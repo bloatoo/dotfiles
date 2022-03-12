@@ -29,17 +29,18 @@ cmd("autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab")
 cmd("autocmd TermOpen * setlocal nonumber norelativenumber")
 
 cmd('nnoremap <C-n> <cmd>NvimTreeToggle<cr>')
-cmd('let g:nvim_tree_width = 35')
+cmd('let g:nvim_tree_width = 10')
 cmd('set mouse=a')
 cmd('set t_md=')
 
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
+    use 'kyazdani42/nvim-tree.lua'
     use 'w0ng/vim-hybrid'
     use 'mxw/vim-jsx'
     use 'neovim/nvim-lspconfig'
     use 'sainnhe/gruvbox-material'
-    use 'kyazdani42/nvim-tree.lua'
+    use 'akinsho/bufferline.nvim'
 
     use {
         'ms-jpq/coq_nvim', 
@@ -58,14 +59,84 @@ require('packer').startup(function()
 end
 )
 
-require('impatient')
-
 require('nvim-tree').setup {}
+
+vim.o.termguicolors = true
+
+-- colors for active , inactive uffer tabs
+require "bufferline".setup {
+    options = {
+        buffer_close_icon = "",
+        modified_icon = "●",
+        left_trunc_marker = "",
+        right_trunc_marker = "",
+        separator = "  ",
+        max_name_length = 14,
+        max_prefix_length = 13,
+        tab_size = 18,
+        view = "multiwindow",
+        show_buffer_close_icons = false,
+        separator_style = "default"
+    },
+    highlights = {
+        background = {
+            guifg = comment_fg,
+            guibg = "#212326"
+        },
+        fill = {
+            guifg = comment_fg,
+            guibg = "#212326"
+        },
+        buffer_selected = {
+            guifg = normal_fg,
+            guibg = "#383c40",
+            gui = "bold"
+        },
+        buffer_visible = {
+            guifg = "#383c40",
+            guibg = "#212326"
+        },
+        separator_visible = {
+            guifg = "#fff",
+            guibg = "#212326"
+        },
+        separator_selected = {
+            guifg = "#383c40",
+            guibg = "#212326"
+        },
+        separator = {
+            guifg = "#212326",
+            guibg = "#212326"
+        },
+        indicator_selected = {
+            guifg = "#383c40",
+            guibg = "#383c40"
+        },
+        modified_selected = {
+            guifg = string_fg,
+            guibg = "#383c40"
+        }
+    }
+}
+
+local opt = {silent = true}
+
+vim.g.mapleader = " "
+
+--command that adds new buffer and moves to it
+vim.api.nvim_command "com -nargs=? -complete=file_in_path New badd <args> | blast"
+vim.api.nvim_set_keymap("n", "<S-b>", ":New ", opt)
+
+--removing a buffer
+vim.api.nvim_set_keymap("n", "<S-f>", [[<Cmd>bdelete<CR>]], opt)
+
+-- tabnew and tabprev
+vim.api.nvim_set_keymap("n", "<S-l>", [[<Cmd>BufferLineCycleNext<CR>]], opt)
+vim.api.nvim_set_keymap("n", "<S-s>", [[<Cmd>BufferLineCyclePrev<CR>]], opt)
 
 cmd('let g:rustfmt_autosave = 1')
 
 local nvim_lsp = require('lspconfig')
-
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -94,7 +165,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'clangd' }
+local servers = { 'rust_analyzer', 'tsserver', 'clangd' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -105,20 +176,21 @@ for _, lsp in ipairs(servers) do
 end
 
 require'nvim-treesitter.configs'.setup {
-  highlight = {
+  hi = {
     enable = true,              -- false will disable the whole extension
-    disable = { "typescriptreact", "rust" },  -- list of language that will be disabled
+    disable = { "rust" },  -- list of language that will be disabled
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Using this option may slow down your editor, and you may see some duplicate his.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_hiing = false,
   },
 }
 
 local coq = require('coq')
 
 require ('statusline')
+require('bufferline')
 require("gitsigns").setup({
     signcolumn = false,
 })
@@ -135,53 +207,51 @@ require'compe'.setup({
 vim.g.indentLine_enabled = 1
 vim.g.indent_blankline_char = "▏"
 
-cmd "hi IndentBlanklineChar guifg=#282828"
+cmd "hi IndentBlanklineChar guifg=#212326"
 
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 vim.g.indent_blankline_show_first_indent_level = false
 
---cmd('hi LineNr guifg=#2e3440')
---cmd('highlight StatusLine guifg=#2e3440 guibg=#22262e')
---cmd('highlight StatusLineNC gui=underline guifg=#2e3440 guibg=#1e222a'):
---cmd('highlight VertSplit guifg=#2e3440')
-
---cmd('hi clear CursorLine')
---cmd('highlight cursorlinenr guifg=#22262e')
---cmd('highlight Pmenu guibg=#2e3440')
---cmd('highlight PmenuSel guibg=#4c566a')
---cmd('highlight PmenuThumb guibg=#d8dee9')
---cmd('highlight SignColumn guibg=none guifg=#22262e')
---cmd('autocmd ColorScheme hi LineNr guifg=#ffffff')
-
---cmd('highlight Normal guibg=none ctermbg=NONE')
-
-
 cmd('colorscheme hybrid')
 
-cmd('highlight DiagnosticError guifg=#cc6666')
-cmd('highlight DiagnosticWarn guifg=#foc674')
+-- lsp
+cmd('hi DiagnosticError guifg=#cc6666')
+cmd('hi DiagnosticWarn guifg=#foc674')
 
+-- general UI stuff
 cmd('hi LineNr guifg=#383838 guibg=#1d1f21')
--- cmd('highlight StatusLine guifg=#1d1f21 guibg=NONE')
--- cmd('highlight StatusLineNC gui=underline guifg=#282828 guibg=#1d1f21')
-cmd('highlight VertSplit guifg=#282828 guibg=NONE')
-cmd('highlight StatusLine guifg=#282828 guibg=#1d1f21')
-cmd('highlight StatusLineNC gui=underline guifg=#282828 guibg=#1d1f21')
-
+cmd('hi VertSplit guifg=#212326 guibg=NONE')
+cmd('hi StatusLine guifg=#212326 guibg=#1d1f21')
+cmd('hi StatusLineNC gui=underline guifg=#212326 guibg=#1d1f21')
 cmd('hi clear CursorLine')
-cmd('highlight cursorlinenr guifg=#1d1f21')
-cmd('highlight Pmenu guibg=#282828')
-cmd('highlight PmenuSel guibg=#383838 guifg=#d8d8d8')
-cmd('highlight PmenuThumb guibg=#d8dee9')
-cmd('highlight SignColumn guibg=NONE guifg=#1d1f21')
-cmd('highlight Normal guibg=none ctermbg=NONE')
+cmd('hi cursorlinenr guifg=#1d1f21')
+cmd('hi Pmenu guibg=#212326')
+cmd('hi PmenuSel guibg=#383838 guifg=#d8d8d8')
+cmd('hi PmenuThumb guibg=#d8dee9')
+cmd('hi SignColumn guibg=NONE guifg=#1d1f21')
+cmd('hi Normal guibg=none ctermbg=NONE')
 
-cmd('highlight NvimTreeFolderIcon guifg=#81a2be')
-cmd('highlight NvimTreeRootFolder guifg=#b294bb')
-cmd('highlight NvimTreeGitStaged guifg=#8c9440')
-cmd('highlight NvimTreeGitDirty guifg=#cc6666')
-cmd('highlight NvimTreeSpecialFile guifg=#f0c674')
-cmd('highlight NvimTreeExecFile guifg=#8c9440')
-cmd('highlight NvimTreeGitDeleted guifg=#cc6666')
-cmd('highlight NvimTreeImageFile guifg=#b294bb')
-cmd('highlight NvimTreeSymlink guifg=#8abeb7')
+-- NvimTree
+cmd('hi NvimTreeFolderIcon guifg=#81a2be')
+cmd('hi NvimTreeRootFolder guifg=#b294bb')
+cmd('hi NvimTreeGitStaged guifg=#8c9440')
+cmd('hi NvimTreeGitDirty guifg=#cc6666')
+cmd('hi NvimTreeSpecialFile guifg=#f0c674')
+cmd('hi NvimTreeExecFile guifg=#8c9440')
+cmd('hi NvimTreeGitDeleted guifg=#cc6666')
+cmd('hi NvimTreeImageFile guifg=#b294bb')
+cmd('hi NvimTreeSymlink guifg=#8abeb7')
+
+-- TSX syntax highlighting
+if(vim.bo.filetype == "typescriptreact")
+then
+    cmd('hi tsxTSType guifg=#f0c674')
+    cmd('hi tsxTSTagDelimiter guifg=#f0c674')
+    cmd('hi tsxTSTagAttribute guifg=#de395f')
+    cmd('hi tsxTSConstructor guifg=#f0c674')
+    cmd('hi tsxTSVariable guifg=#c5c8c6')
+    cmd('hi tsxTSPunctBracket guifg=#c5c8c6')
+    cmd('hi tsxTSPunctDelimiter guifg=#c5c8c6')
+    cmd('hi tsxTSFunction guifg=#f0c674')
+    cmd('hi tsxTSKeywordFunction guifg=#81a2be')
+end
